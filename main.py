@@ -49,6 +49,20 @@ if not os.path.exists(MODEL_FILE):
 
     model = RandomForestRegressor(random_state=42)
     model.fit(housing_prepared, housing_labels)
+    
+    feature_importances = model.feature_importances_
+    num_features = num_attribs
+    cat_encoder = pipeline.named_transformers_["cat"].named_steps["onehot"]
+    cat_feature_names = cat_encoder.get_feature_names_out(cat_attribs)
+    all_feature_names = np.r_[num_features, cat_feature_names]
+    importance_df = pd.DataFrame({
+    "feature": all_feature_names,
+    "importance": feature_importances
+}).sort_values("importance", ascending=False)
+
+    print("\nTop features affecting house value:")
+    print(importance_df.head(10))
+    importance_df.to_csv("feature_importances.csv", index=False)
 
     # Save model and pipeline
     joblib.dump(model, MODEL_FILE)
