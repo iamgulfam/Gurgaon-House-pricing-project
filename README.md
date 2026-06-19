@@ -161,6 +161,6 @@ output.csv
 
 ## 👨‍💻 Author
 
-Gulfam Raza
+Gulfam Raza, B.Tech-IT
 
 If you found this project useful, consider giving it a ⭐
